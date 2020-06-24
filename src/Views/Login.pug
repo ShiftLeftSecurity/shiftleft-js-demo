@@ -1,0 +1,40 @@
+doctype html
+|
+|
+div(style={ margin: '0 auto'})
+  form(
+    method="POST"
+    action="/api/v1/login"
+    style={display: 'flex', 'align-items': 'center', 'flex-direction': 'column'}
+  )
+    h2 Login Form 
+    input(
+      type="text"
+      name="username"
+      placeholder="username"
+      autocomplete="username"
+      required
+    )
+    |
+    |
+    input(
+      type="password"
+      name="password"
+      placeholder="password"
+      required
+      autocomplete="current-password"
+    )
+    |
+    |
+    div
+      label Keep Alive
+      input(
+        type="checkbox"
+        name="keepAlive"
+      )
+    |
+    |
+    button(
+      type="submit"
+    ) Login
+    

@@ -1,0 +1,23 @@
+{
+  "name": "@shiftleft/tarpit-expressjs-mongodb",
+  "version": "1.0.0",
+  "description": "Tarpit built with expressJS and mongoDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run init-db && npm run server",
+    "init-db": "node db-init.js",
+    "server": "PORT=8089 node index.js"
+  },
+  "author": "Chaitanya Kumar Kamatham <projects+github@kchaitanya.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "form-data": "^2.5.1",
+    "mongodb": "^3.3.3",
+    "pug": "^2.0.4"
+  }
+}

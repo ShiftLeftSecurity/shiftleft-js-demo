@@ -1,0 +1,27 @@
+doctype html
+|
+|
+div Welcome to the userInput Vulnerability page!
+div
+  script #{userInput}
+  p #{userInput}
+  pre #{result}
+  p Date: #{date}
+  div(style={ margin: '0 auto'})
+    form(
+      method="GET"
+      action="/user-input"
+      style={display: 'flex', 'align-items': 'center', 'flex-direction': 'column'}
+    )
+      h2 User Input Exploit 
+      input(
+        type="text"
+        name="userInput"
+        placeholder="user input"
+        required
+      )
+      |
+      |
+      button(
+        type="submit"
+      ) Send

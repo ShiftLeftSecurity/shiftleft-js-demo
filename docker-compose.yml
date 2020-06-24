@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  mongo:
+    image: mongo:4.2
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: tarpit
+
+  tarpit-expressjs-mongodb:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - '8089:8089'
+    depends_on:
+      - mongo
