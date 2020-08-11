@@ -8,4 +8,4 @@ build_rules:
       - Sensitive Data Leak
     owasp_category:
       - a1-injection
-    threshold: 1
+    threshold: 2
