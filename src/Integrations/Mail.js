@@ -16,9 +16,9 @@ class Mail {
         password: apiKey
       }
     });
-    console.log(
-      `Connecting to mail host: ${host}:${domain} with login ${username}/${apiKey}`
-    );
+//    console.log(
+//      `Connecting to mail host: ${host}:${domain} with login ${username}/${apiKey}`
+//    );
   }
 
   sendMail(fromAddress, toAddress, subject, msg) {
