@@ -44,10 +44,10 @@ class Login {
           zipCode: result.zipCode
         };
         const creditInfo = encryptData(result.creditCard);
-//         logger.info(`user: ${JSON.stringify(user)} successfully logged in`);
-//         logger.info(
-//           `user ${user.fname} credit info: ${JSON.stringify(creditInfo)}`
-//         );
+        logger.info(`user: ${JSON.stringify(user)} successfully logged in`);
+        logger.info(
+          `user ${user.fname} credit info: ${JSON.stringify(creditInfo)}`
+        );
         res.cookie('username', result.username);
         res.cookie('maxAge', 864000);
         res.cookie('cc', creditInfo);
