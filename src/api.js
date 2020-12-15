@@ -7,6 +7,9 @@ const imageLookup = new ImageLookup();
 
 const API_PREFIX = '/api/v1';
 
+// This is not a real secret, I just want to trigger a new finding
+const SECRET = 'gBVD4XWQ//6nxp+SKeTx1BwuCabUx/dTwHJiJ7aaSmg='
+
 module.exports = app => {
   app.get(`${API_PREFIX}/image-lookup`, imageLookup.get);
 
