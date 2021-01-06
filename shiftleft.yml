@@ -1,9 +1,10 @@
 source:
   scan: previous
 build_rules:
-  - id: allow-zero-findings
+  - id: no new HIGN vulns
     finding_types:
       - vuln
       - insight
     severity:
       - SEVERITY_HIGH_IMPACT
+
