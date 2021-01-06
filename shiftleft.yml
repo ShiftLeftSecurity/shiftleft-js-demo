@@ -1,10 +1,10 @@
-
 source:
-  scan: 1
+  scan: previous
 build_rules:
   - id: no new HIGN vulns
     finding_types:
       - vuln
+      - insight
     severity:
       - SEVERITY_HIGH_IMPACT
-    threshold: 0
+
