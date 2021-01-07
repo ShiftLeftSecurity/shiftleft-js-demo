@@ -1,5 +1,5 @@
 source:
-  scan: previous
+  scan: 1
 build_rules:
   - id: no new HIGN vulns
     finding_types:
