@@ -43,7 +43,8 @@ jobs:
       run: |
         curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
     - name: Validate Build Rules
-      run: ${GITHUB_WORKSPACE}/sl check-analysis --app shiftleft-js-demo \
+      run: |
+        ${GITHUB_WORKSPACE}/sl check-analysis --app shiftleft-js-demo \
             --source "tag.branch=master" \
             --target "tag.branch=${{ github.head_ref || steps.extract_branch.outputs.branch }}" \
             --report \
