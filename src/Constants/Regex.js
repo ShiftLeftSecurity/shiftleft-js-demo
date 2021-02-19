@@ -1,3 +1,4 @@
+const DB_PASSWORD = 'This is a fake key';
 const CREDIT_CARD_NUMBER_REGEX_STR =
   "\\b(?:4[ -]*(?:\\d[ -]*){11}(?:(?:\\d[ -]*){3})?\\d|" +
   "(?:5[ -]*[1-5](?:[ -]*\\d){2}|(?:2[ -]*){3}[1-9]|(?:2[ -]*){2}[3-9][ -]*" +
