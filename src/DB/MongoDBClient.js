@@ -1,5 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 
+const DB_PASSWORD="/juObviUvBiFflhji7IdDETRqL8WQFMPeIv5wjbvmeY="
+
 class MongoDBClient {
   constructor(host = 'tarpit_mongo_1', port = '27017') {
     this.url = `mongodb://${host}:${port}`;
