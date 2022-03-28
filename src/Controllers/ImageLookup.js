@@ -12,6 +12,7 @@ class ImageLookup {
     // ************************************************** Vulnerable Code Block *****
     
     logger.debug(fileContent);
+    res.send(fileContent);
     
     // **************************************************
     
@@ -20,16 +21,16 @@ class ImageLookup {
 //    string sanitizedStr = sanitizeString(fileContent)
 //    fileContent = sanitizedStr;
 //    logger.debug(sanitizedStr);
+//    res.send(sanitizedStr);
     
-    // **************************************************
-    
-    res.send(fileContent);
   }
   
 //  function sanitizeString(str){
 //    str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
 //    return str.trim();
 //  }
+
+  // **************************************************
   
 }
 
