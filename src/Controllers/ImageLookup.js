@@ -11,24 +11,23 @@ class ImageLookup {
     // **************************************************
     // ************************************************** Vulnerable Code Block *****
     
-    logger.debug(fileContent);
-    res.send(fileContent);
+    //logger.debug(fileContent);
+    //res.send(fileContent);
     
     // **************************************************
     
     // ************************************************** Remediated Code Block *****
     
-//    string sanitizedStr = sanitizeString(fileContent)
-//    fileContent = sanitizedStr;
-//    logger.debug(sanitizedStr);
-//    res.send(sanitizedStr);
+    string sanitizedStr = sanitizeString(fileContent)
+    logger.debug(sanitizedStr);
+    res.send(sanitizedStr);
     
   }
   
-//  function sanitizeString(str){
-//    str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
-//    return str.trim();
-//  }
+  function sanitizeString(str){
+    str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+    return str.trim();
+  }
 
   // **************************************************
   
