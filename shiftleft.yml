@@ -1,5 +1,5 @@
-source:
-  branch: master
+#source:
+  #branch: master
   
 build_rules:
   - id: allow-zero-findings
