@@ -27,7 +27,14 @@ jobs:
     - name: NextGen Static Analysis
       #run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-demo --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --js --cpg .
       #run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-demo --tag branch=master -js --cpg .
-      run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-demo --tag branch=$(Build.SourceBranchName) -js --cpg .
+      
+      run: ${GITHUB_WORKSPACE}/sl analyze \
+          --strict \
+          --wait \
+          --app shiftleft-js-demo \
+          --tag branch=$(Build.SourceBranchName) \
+          -js \
+          --cpg .
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         
@@ -41,7 +48,8 @@ jobs:
         curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
     - name: Validate Build Rules
       run: |
-        ${GITHUB_WORKSPACE}/sl check-analysis --app shiftleft-js-demo \
+        ${GITHUB_WORKSPACE}/sl check-analysis \
+            --app shiftleft-js-demo \
             --branch "${{ github.head_ref || steps.extract_branch.outputs.branch }}" \
             --target=tag.branch="${{ github.head_ref || steps.extract_branch.outputs.branch }}" \
             --source=tag.branch=master \
