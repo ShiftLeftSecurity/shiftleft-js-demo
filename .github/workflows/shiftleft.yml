@@ -26,7 +26,8 @@ jobs:
       id: extract_branch
     - name: NextGen Static Analysis
       #run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-demo --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --js --cpg .
-      run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-demo --tag branch=master -js --cpg .      
+      #run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-demo --tag branch=master -js --cpg .
+      run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-demo --target=tag.branch=$(Build.SourceBranchName) --source=tag.branch=master --report -js --cpg .
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         
