@@ -43,7 +43,7 @@ jobs:
       run: |
         ${GITHUB_WORKSPACE}/sl check-analysis --app shiftleft-js-demo \
             --branch "${{ github.head_ref || steps.extract_branch.outputs.branch }}" \
-            --target=tag.branch=$(Build.SourceBranchName) \
+            --target=tag.branch="${{ github.head_ref || steps.extract_branch.outputs.branch }}" \
             --source=tag.branch=master \
             --report \
             --github-pr-number=${{github.event.number}} \
