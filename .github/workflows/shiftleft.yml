@@ -47,7 +47,7 @@ jobs:
     - name: Validate Build Rules
       run: |
         ${GITHUB_WORKSPACE}/sl check-analysis \
-            --app shiftleft-js-22040 \
+            --app shiftleft-js-220407 \
             --branch "${{ github.head_ref || steps.extract_branch.outputs.branch }}" \
             --target=tag.branch="${{ github.head_ref || steps.extract_branch.outputs.branch }}" \
             --source=tag.branch=master \
