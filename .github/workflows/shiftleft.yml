@@ -1,11 +1,11 @@
 ---
 # This workflow integrates ShiftLeft NG SAST with GitHub
 # Visit https://docs.shiftleft.io for help
-name: ShiftLeft
+name: Protect with ShiftLeft
 
 on:
-  pull_request:
   workflow_dispatch:
+  pull_request:
   push:
     branches:
       - main
@@ -28,13 +28,36 @@ jobs:
       shell: bash
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: extract_branch
+    - name: Branch name
+      run: echo running ${{ github.event.repositor.y.name }} on branch ${GITHUB_REF##*/}
     - name: NextGen Static Analysis
-      #run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-demo --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --js --cpg .
-      #run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-demo --tag branch=master -js --cpg .
-      
-      run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-220407 --tag branch=$(Build.SourceBranchName) -js --cpg .
+      # Removed the --wait since we wont be checking the scan
+      if: ${{ github.ref == 'refs/heads/master' }}
+      run: |
+          ${GITHUB_WORKSPACE}/sl analyze --app "shiftleft-java-220404" \
+          --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} \
+          --vcs-prefix-correction "io/shiftleft=src/main/java/" \
+          --java --cpg target/hello-shiftleft-*.jar
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
+        SHIFTLEFT_ORG_ID: ${{ secrets.SHIFTLEFT_ORG_ID }}
+    - name: NG SAST PR
+      # --wait in place because we will run check-analysis with this scan
+      if: ${{ github.event_name == 'pull_request' }}
+      run: |
+          ${GITHUB_WORKSPACE}/sl analyze --wait --app "shiftleft-java-220404" \
+          --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} \
+          --vcs-prefix-correction "io/shiftleft=src/main/java/" \
+          --java --cpg target/hello-shiftleft-*.jar
+      env: 
+        SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
+        SHIFTLEFT_ORG_ID: ${{ secrets.SHIFTLEFT_ORG_ID }}
+      
+      #run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-demo --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --js --cpg .
+      #run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-demo --tag branch=master -js --cpg .
+      #run: ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-js-220407 --tag branch=$(Build.SourceBranchName) -js --cpg .
+      #env:
+      #  SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         
   Build-Rules: 
     runs-on: ubuntu-latest
@@ -45,18 +68,19 @@ jobs:
       run: |
         curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
     - name: Validate Build Rules
+      #run: |
+       # ${GITHUB_WORKSPACE}/sl check-analysis --app shiftleft-js-220407 --branch "${{ github.head_ref || steps.extract_branch.outputs.branch }}" --target=tag.branch="${{ github.head_ref || steps.extract_branch.outputs.branch }}" --source=tag.branch=master --report --github-pr-number=${{github.event.number}} --github-pr-user=${{ github.repository_owner }} --github-pr-repo=${{ github.event.repository.name }} --github-token=${{ secrets.GITHUB_TOKEN }}
       run: |
         ${GITHUB_WORKSPACE}/sl check-analysis \
+            --v2 \
+            --report \
             --app shiftleft-js-220407 \
             --branch "${{ github.head_ref || steps.extract_branch.outputs.branch }}" \
             --target=tag.branch="${{ github.head_ref || steps.extract_branch.outputs.branch }}" \
             --source=tag.branch=master \
-            --report \
             --github-pr-number=${{github.event.number}} \
             --github-pr-user=${{ github.repository_owner }} \
             --github-pr-repo=${{ github.event.repository.name }} \
             --github-token=${{ secrets.GITHUB_TOKEN }}
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
-         
-  
