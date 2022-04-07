@@ -4,7 +4,12 @@
 name: Scan Action with ShiftLeft
 
 on:
-  workflow_dispatch:
+   workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
 
 jobs:
   NextGen-Static-Analysis:
