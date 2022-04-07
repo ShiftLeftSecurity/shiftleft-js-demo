@@ -37,7 +37,7 @@ jobs:
           ${GITHUB_WORKSPACE}/sl analyze --app "shiftleft-java-220407" \
           --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} \
           --vcs-prefix-correction "io/shiftleft=src/main/java/" \
-          --java --cpg
+          --java --cpg .
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         SHIFTLEFT_ORG_ID: ${{ secrets.SHIFTLEFT_ORG_ID }}
@@ -48,7 +48,7 @@ jobs:
           ${GITHUB_WORKSPACE}/sl analyze --wait --app "shiftleft-java-220407" \
           --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} \
           --vcs-prefix-correction "io/shiftleft=src/main/java/" \
-          --java --cpg
+          --java --cpg .
       env: 
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         SHIFTLEFT_ORG_ID: ${{ secrets.SHIFTLEFT_ORG_ID }}
