@@ -34,10 +34,10 @@ jobs:
       # Removed the --wait since we wont be checking the scan
       if: ${{ github.ref == 'refs/heads/master' }}
       run: |
-          ${GITHUB_WORKSPACE}/sl analyze --app "shiftleft-java-220404" \
+          ${GITHUB_WORKSPACE}/sl analyze --app "shiftleft-java-220407" \
           --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} \
           --vcs-prefix-correction "io/shiftleft=src/main/java/" \
-          --java --cpg target/hello-shiftleft-*.jar
+          --java --cpg
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         SHIFTLEFT_ORG_ID: ${{ secrets.SHIFTLEFT_ORG_ID }}
@@ -45,10 +45,10 @@ jobs:
       # --wait in place because we will run check-analysis with this scan
       if: ${{ github.event_name == 'pull_request' }}
       run: |
-          ${GITHUB_WORKSPACE}/sl analyze --wait --app "shiftleft-java-220404" \
+          ${GITHUB_WORKSPACE}/sl analyze --wait --app "shiftleft-java-220407" \
           --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} \
           --vcs-prefix-correction "io/shiftleft=src/main/java/" \
-          --java --cpg target/hello-shiftleft-*.jar
+          --java --cpg
       env: 
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         SHIFTLEFT_ORG_ID: ${{ secrets.SHIFTLEFT_ORG_ID }}
