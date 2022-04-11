@@ -27,11 +27,11 @@ jobs:
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: extract_branch
     - name: NextGen Static Analysis
-      run: ${GITHUB_WORKSPACE}/sl analyze --wait --oss-recursive --app shiftleft-js-220407a --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --js --cpg .
+      run: ${GITHUB_WORKSPACE}/sl analyze --wait --oss-recursive --app shiftleft-js-220411a --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --js --cpg .
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
     - name: Validate Build Rules
-      run: ${GITHUB_WORKSPACE}/sl check-analysis --app shiftleft-js-220407a --target tag.branch=${{ github.head_ref}} --source --target tag.branch=master --report
+      run: ${GITHUB_WORKSPACE}/sl check-analysis --app shiftleft-js-220411a --target tag.branch=${{ github.head_ref}} --source --target tag.branch=master --report
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         SHIFTLEFT_GH_PR_REPO_OWNER: ${{ github.repository_owner }}
