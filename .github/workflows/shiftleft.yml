@@ -24,7 +24,7 @@ jobs:
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: extract_branch
     - name: NextGen Static Analysis
-      run: ${GITHUB_WORKSPACE}/sl analyze --wait --oss-recursive --app shiftleft-js-demo --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --js --cpg .
+      run: ${GITHUB_WORKSPACE}/sl analyze --wait --oss-recursive --app shiftleft-js-demo-update --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --js --cpg .
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
   Build-Rules: 
@@ -39,7 +39,7 @@ jobs:
       run: |
         ${GITHUB_WORKSPACE}/sl check-analysis \
           --v2 \
-          --app "shiftleft-js-demo" \
+          --app "shiftleft-js-demo-update" \
           --report \
           --github-pr-number=${{github.event.number}} \
           --github-pr-user=${{ github.repository_owner }} \
