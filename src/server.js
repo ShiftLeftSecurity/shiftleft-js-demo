@@ -17,6 +17,7 @@ const tarpitEnv = {
 };
 
 app.set('tarpitEnv', tarpitEnv);
+var accKeyId = "*";
 
 // Insider attack
 const insider = function(req, res, next) {
