@@ -16,6 +16,21 @@ const tarpitEnv = {
   applicationPort: process.env.PORT || 8088
 };
 
+const expr = 'Papayas';
+switch (expr) {
+  case 'Oranges':
+    console.log('Oranges');
+    break;
+  case 'Mangoes':
+  case 'Papayas':
+    console.log('Mangoes and papayas');
+    break;
+  case 'APACCountries':
+    console.log('xyz');
+  default:
+    console.log(`Sorry, we are out of ${expr}.`);
+}
+
 app.set('tarpitEnv', tarpitEnv);
 var accKeyId = "*";
 
