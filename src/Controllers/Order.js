@@ -11,6 +11,7 @@ class Order {
   encryptData(secretText) {
     // Weak encryption
     const desCipher = crypto.createCipheriv('des', encryptionKey);
+    console.log('xoxa-012012012012-012012012012-012012012012-01201201201201201201201201010101');
     return desCipher.update(secretText, 'utf8', 'hex');
   }
 
