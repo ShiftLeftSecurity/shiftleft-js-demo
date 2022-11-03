@@ -1,0 +1,13 @@
+ngsast:
+  - app:
+      name: shiftleft-js-demo
+      additional-findings:
+        - my-secrets
+additional-findings:
+  my-secrets:
+    name: secrets
+    entropy: 0.05
+    exclude-tags:
+      - AnythingElse
+      - IaaS
+      
