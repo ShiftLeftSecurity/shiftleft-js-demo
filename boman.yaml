@@ -5,11 +5,11 @@ Auth:
 SAST:
   language: ["java","ruby","semgrep","nodejs","python-snyk" ,"node-snyk", "ruby-snyk","python"] 
 
-SCA:
-  language: "nodejs"
+# SCA:
+#   language: "nodejs"
 
-DAST:
-  type: "WEB" ## API, WEB, WEB-ADV
-  URL:  "http://reddyprasade.github.io/" 
+# DAST:
+#   type: "WEB" ## API, WEB, WEB-ADV
+#   URL:  "http://reddyprasade.github.io/" 
 
-Secret_Scan: True
+# Secret_Scan: True
