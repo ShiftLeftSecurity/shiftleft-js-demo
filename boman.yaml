@@ -3,7 +3,7 @@ Auth:
   customer_token: "1f3dc7b3-cb4e-4eb9-b5ee-c780947f12e3"
 
 SAST:
-  language: ["java","ruby","semgrep","nodejs","python-snyk" ,"node-snyk", "ruby-snyk","python"] 
+  language:["java","ruby","semgrep","nodejs","python-snyk","node-snyk","ruby-snyk","python",] 
 
 # SCA:
 #   language: "nodejs"
