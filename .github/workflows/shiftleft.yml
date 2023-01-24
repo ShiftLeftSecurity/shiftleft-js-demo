@@ -9,7 +9,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: code-coverage-report
-          path: output/test/code-coverage.csv
+          path: output/test/code-coverage.json
       - name: BomanCLI
         run: |
           sudo pip install --extra-index-url https://test.pypi.org/simple/ boman-cli-uat==0.8
