@@ -1,11 +1,12 @@
 Auth:
   project_token: "638c4e23-8433-4290-8993-77eafb7751dc"
   customer_token: "1f3dc7b3-cb4e-4eb9-b5ee-c780947f12e3"
-
 SAST:
-  language:["python-snyk","node-snyk","ruby-snyk","python"] # ["java","ruby","semgrep","nodejs",
+    language: "python-snyk"
+# SAST:
+#   language:["python-snyk","node-snyk","ruby-snyk","python","java","ruby","semgrep","nodejs"]
 
-# SCA:
+# sSCA:
 #   language: "nodejs"
 
 # DAST:
