@@ -1,0 +1,13 @@
+version = 1
+
+[[analyzers]]
+name = "javascript"
+
+[[analyzers]]
+name = "docker"
+
+[[analyzers]]
+name = "terraform"
+
+[[analyzers]]
+name = "secrets"
