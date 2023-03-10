@@ -4,7 +4,7 @@ version = 1
 name = "java"
 
   [analyzers.meta]
-  runtime_version = "11"
+  runtime_version = "8"
 
 [[analyzers]]
 name = "python"
@@ -18,6 +18,16 @@ name = "sql"
 [[analyzers]]
 name = "javascript"
 
+  [analyzers.meta]
+  plugins = [
+    "react",
+    "angular",
+    "vue",
+    "ember",
+    "meteor",
+    "angularjs"
+  ]
+
 [[analyzers]]
 name = "docker"
 
@@ -26,3 +36,24 @@ name = "terraform"
 
 [[analyzers]]
 name = "secrets"
+
+[[transformers]]
+name = "google-java-format"
+
+[[transformers]]
+name = "prettier"
+
+[[transformers]]
+name = "standardjs"
+
+[[transformers]]
+name = "yapf"
+
+[[transformers]]
+name = "autopep8"
+
+[[transformers]]
+name = "black"
+
+[[transformers]]
+name = "isort"
