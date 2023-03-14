@@ -185,7 +185,7 @@ async function createUsers(db) {
       lastName: 'Stein',
       company: 'KAGE',
       email: 'monica.stein@kage.name',
-      phone: '+1 (911) 560-2495',
+      phone: '+1 (911) 560-2497',
       address: '989 Radde Place, Alleghenyville, Maine',
       zipCode: 5691,
       creditCard: '2ef14544-ab4c-4814-8968-9242f1e26a83',
