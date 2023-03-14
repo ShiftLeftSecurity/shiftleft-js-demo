@@ -13,9 +13,10 @@ permissions:
 jobs:
   Analysis:
     runs-on: ubuntu-latest
-
     steps:
       - name: Analyze with SonarQube
+        
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
