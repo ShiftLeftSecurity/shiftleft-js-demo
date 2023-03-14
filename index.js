@@ -1,2 +1,2 @@
-require("./src");
+require('./src')
 testing
