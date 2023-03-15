@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Audit dependencies
-        uses: ossillate-inc/packj.dev@0.0.8-beta
+        uses: ossillate-inc/packj.dev@0.0.5-beta
         with:
           # TODO: replace with your dependency files in the repo
           DEPENDENCY_FILES: pypi:npm:package.json
