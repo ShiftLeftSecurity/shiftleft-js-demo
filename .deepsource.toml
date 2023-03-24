@@ -1,10 +1,55 @@
 version = 1
 
 [[analyzers]]
+name = "ruby"
+
+[[analyzers]]
+name = "rust"
+
+  [analyzers.meta]
+  msrv = "stable"
+
+[[analyzers]]
+name = "scala"
+
+[[analyzers]]
+name = "cxx"
+
+[[analyzers]]
+name = "ansible"
+
+[[analyzers]]
+name = "csharp"
+
+[[analyzers]]
+name = "go"
+
+  [analyzers.meta]
+  import_root = "github.com/lohiz/shiftleft-js-demo"
+
+[[analyzers]]
+name = "php"
+
+[[analyzers]]
+name = "javascript"
+
+[[analyzers]]
+name = "terraform"
+
+[[analyzers]]
+name = "sql"
+
+[[analyzers]]
+name = "test-coverage"
+
+[[analyzers]]
+name = "docker"
+
+[[analyzers]]
 name = "java"
 
   [analyzers.meta]
-  runtime_version = "8"
+  runtime_version = "11"
 
 [[analyzers]]
 name = "python"
@@ -13,47 +58,7 @@ name = "python"
   runtime_version = "3.x.x"
 
 [[analyzers]]
-name = "sql"
-
-[[analyzers]]
-name = "javascript"
-
-  [analyzers.meta]
-  plugins = [
-    "react",
-    "angular",
-    "vue",
-    "ember",
-    "meteor",
-    "angularjs"
-  ]
-
-[[analyzers]]
-name = "docker"
-
-[[analyzers]]
-name = "terraform"
+name = "shell"
 
 [[analyzers]]
 name = "secrets"
-
-[[transformers]]
-name = "google-java-format"
-
-[[transformers]]
-name = "prettier"
-
-[[transformers]]
-name = "standardjs"
-
-[[transformers]]
-name = "yapf"
-
-[[transformers]]
-name = "autopep8"
-
-[[transformers]]
-name = "black"
-
-[[transformers]]
-name = "isort"
