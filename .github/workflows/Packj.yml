@@ -1,5 +1,12 @@
 name: Packj security audit
-on: [pull_request]
+on:
+  pull_request: {}
+  push:
+    branches:
+    - main
+    - master
+    paths:
+    - .github/workflows/Packj.yml
 
 permissions:
   contents: read
