@@ -24,5 +24,5 @@ jobs:
         uses: ossillate-inc/packj-github-action@v0.0.10-beta
 
         with:
-          DEPENDENCY_FILES: pypi:requirements.txt,npm:package.json
+          DEPENDENCY_FILES: pypi:requirements.txt,npm:package.json,npm:package-lock.json
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
