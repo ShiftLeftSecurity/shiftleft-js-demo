@@ -3,11 +3,9 @@ name: Packj audit demo
 
 # Controls when the workflow will run
 on:
-  pull_request: {}
-  push:
+  pull_request:
     branches:
-    - main
-    - master
+      - main
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -23,7 +21,7 @@ jobs:
 
       # Audit 
       - name: Audit dependencies
-        uses: ossillate-inc/packj-github-action@v0.0.9-beta
+        uses: ossillate-inc/packj-github-action@v0.0.10-beta
 
         with:
           DEPENDENCY_FILES: pypi:requirements.txt,npm:package.json
