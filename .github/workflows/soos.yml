@@ -1,11 +1,10 @@
 name: Example workflow using SOOS
-on: 
+on:
+  pull_request: {}
   push:
-    branches: 
-      - main 
-  pull_request:
-    branches: 
-      - main 
+    branches:
+    - main
+    - master 
     paths:
       - package.json
 jobs:
@@ -17,7 +16,7 @@ jobs:
     - uses: actions/checkout@master
 
     - name: SOOS Core SCA
-      uses: uses: soos-io/soos-sca-github-action@v1.2.3
+      uses: soos-io/soos-sca-github-action@v1.2.3
       with:
         project_name: shiftleft-js-demo
         client_id: ${{ secrets.SOOS_CLIENT_ID }}
