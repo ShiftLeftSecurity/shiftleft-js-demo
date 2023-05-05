@@ -1,0 +1,24 @@
+name: Example workflow using SOOS
+on: 
+  push:
+    branches: 
+      - main 
+  pull_request:
+    branches: 
+      - main 
+    paths:
+      - package.json
+jobs:
+  synchronous-analysis-with-blocking-result:
+    name: SOOS SCA Scan
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@master
+
+    - name: SOOS Core SCA
+      uses: uses: soos-io/soos-sca-github-action@v1.2.3
+      with:
+        project_name: shiftleft-js-demo
+        client_id: ${{ secrets.SOOS_CLIENT_ID }}
+        api_key: ${{ secrets.SOOS_API_KEY }}
