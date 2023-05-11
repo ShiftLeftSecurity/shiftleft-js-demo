@@ -1,0 +1,27 @@
+name: Verify Code Vulnerabilities
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  verify-code-vulnerabilities:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install CodeQL
+        run: |
+          curl -L https://github.com/microsoft/vscode-dev-containers/releases/download/v0.159.0/codeql-linux-x64.tar.gz | tar -xz
+          export PATH=$PATH:$HOME/.vscode-dev-containers/codeql
+      - name: Run CodeQL
+        run: |
+          codeql analyze --severity-level=high .
+      - name: Report Vulnerabilities
+        run: |
+          codeql report --format=sarif . | codeql sarif-to-html
+
+    if: github.event_name == 'pull_request'
