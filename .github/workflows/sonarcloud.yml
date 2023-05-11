@@ -1,0 +1,43 @@
+name: SonarCloud Security Scan
+on:
+  pull_request: {}
+  push:
+    branches:
+    - main
+    - master
+jobs:
+  sonarcloud-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up SonarCloud
+        uses: sonarsource/sonarcloud-github-action@v1
+        with:
+          sonarcloud-organization: ${{ secrets.SONARCLOUD_ORGANIZATION }}
+          sonarcloud-project-key: ${{ secrets.SONARCLOUD_PROJECT_KEY }}
+
+      - name: Run SonarCloud analysis
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=${{ secrets.SONARCLOUD_PROJECT_KEY }} \
+            -Dsonar.organization=${{ secrets.SONARCLOUD_ORGANIZATION }} \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
+
+      - name: Send alerts to Telegram
+        uses: tjmehta/telegram-action@v1
+        with:
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          chat_id: ${{ secrets.TELEGRAM_CHAT_ID }}
+          message: |
+            **SonarCloud Security Scan Results**
+
+            * **Pull Request:** ${{ github.event.pull_request.title }}
+            * **Commit:** ${{ github.event.head_commit.id }}
+            * **URL:** ${{ github.event.pull_request.html_url }}
+
+            **Security Vulnerabilities Found:**
+
+            ${{ steps.sonarcloud-scan.outputs.sonar_findings }}
