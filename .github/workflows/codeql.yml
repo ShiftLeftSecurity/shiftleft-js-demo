@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install CodeQL
         run: |
-          curl -L https://github.com/microsoft/vscode-dev-containers/releases/download/v0.159.0/codeql-linux-x64.tar.gz | tar -xz
+          curl -L https://github.com/microsoft/vscode-dev-containers/archive/refs/tags/v0.245.2.tar.gz | tar -xz
           export PATH=$PATH:$HOME/.vscode-dev-containers/codeql
       - name: Run CodeQL
         run: |
