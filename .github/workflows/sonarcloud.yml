@@ -6,26 +6,19 @@ on:
     - main
     - master
 jobs:
-  sonarcloud-scan:
+  sonarcloud:
+    name: SonarCloud
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up SonarCloud
-        uses: sonarsource/sonarcloud-github-action@v1
+      - uses: actions/checkout@v3
         with:
-          sonarcloud-organization: ${{ secrets.SONARCLOUD_ORGANIZATION }}
-          sonarcloud-project-key: ${{ secrets.SONARCLOUD_PROJECT_KEY }}
-
-      - name: Run SonarCloud analysis
-        run: |
-          sonar-scanner \
-            -Dsonar.projectKey=${{ secrets.SONARCLOUD_PROJECT_KEY }} \
-            -Dsonar.organization=${{ secrets.SONARCLOUD_ORGANIZATION }} \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
-
+          fetch-depth: 0  
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          
       - name: Send alerts to Telegram
         uses: tjmehta/telegram-action@v1
         with:
