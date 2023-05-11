@@ -1,13 +1,10 @@
 name: Verify Code Vulnerabilities
-
 on:
-  pull_request:
-    branches:
-      - main
+  pull_request: {}
   push:
     branches:
-      - main
-
+    - main
+    - master
 jobs:
   verify-code-vulnerabilities:
     runs-on: ubuntu-latest
