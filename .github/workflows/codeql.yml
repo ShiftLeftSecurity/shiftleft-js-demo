@@ -60,3 +60,9 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
+    - name: Send Slack notification
+      uses: rt2zz/action-slack@v1
+      with:
+        token: ${{ secrets.SLACK_TOKEN }}
+        channel: '#bugbounty'
+        text: 'SonarQube scan completed with status: ${{ steps.sonarcloud.outputs.status }}'
