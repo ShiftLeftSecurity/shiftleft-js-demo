@@ -65,4 +65,4 @@ jobs:
       with:
         token: ${{ secrets.SLACK_TOKEN }}
         channel: '#bugbounty'
-        text: 'SonarQube scan completed with status: ${{ steps.sonarcloud.outputs.status }}'
+        text: 'Code scan completed'
