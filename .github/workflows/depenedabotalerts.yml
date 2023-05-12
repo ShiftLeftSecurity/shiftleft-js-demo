@@ -1,21 +1,15 @@
 name: Dependency Analysis
 on:
-  pull_request: {}
-  push:
-    branches:
-    - main
-    - master
-    
+  schedule:
+    - cron: '0 10 * * 1' # Cron 
   workflow_dispatch:
 jobs:
-  slackNotification:
-    name: Slack Notification
-    if: startsWith(github.head_ref, 'dependabot/') # This step only runs when PR has dependabot/ HEAD\
+  Notify-Vulnerabilites:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2.5.0
-    - name: Slack Notification
-      uses: kv109/action-ready-for-review@0.2
-      env:
-        SLACK_CHANNEL: dependabot-notifications
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      # Latest version available at: https://github.com/kunalnagarco/action-cve/releases
+      - name: Notify Vulnerabilities
+        uses: kunalnagarco/action-cve@v1.7.15
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # This secret need to be created
+          slack_webhook: ${{ secrets.SLACK_WEBHOOK }} # This secret need to be created
