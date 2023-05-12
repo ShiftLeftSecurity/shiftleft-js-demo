@@ -1,0 +1,21 @@
+name: Dependency Analysis
+on:
+  pull_request: {}
+  push:
+    branches:
+    - main
+    - master
+    
+  workflow_dispatch:
+jobs:
+  slackNotification:
+    name: Slack Notification
+    if: startsWith(github.head_ref, 'dependabot/') # This step only runs when PR has dependabot/ HEAD\
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.5.0
+    - name: Slack Notification
+      uses: kv109/action-ready-for-review@0.2
+      env:
+        SLACK_CHANNEL: dependabot-notifications
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
