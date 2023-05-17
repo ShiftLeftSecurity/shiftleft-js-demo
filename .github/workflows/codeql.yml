@@ -67,7 +67,7 @@ jobs:
         status: ${{ job.status }}
         fields: severity,description,ref
         footer: "GitHub Actions"
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        channel: your-slack-channel
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # This secret need to be created
+        slack_webhook: ${{ secrets.SLACK_WEBHOOK }} # This secret need to be created
         text: |
           A code vulnerability scan has completed.
