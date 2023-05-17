@@ -60,14 +60,3 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
-    
-    - name: Send Slack notification
-      uses: slack/github-action@v2
-      with:
-        status: ${{ job.status }}
-        fields: severity,description,ref
-        footer: "GitHub Actions"
-        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # This secret need to be created
-        slack_webhook: ${{ secrets.SLACK_WEBHOOK }} # This secret need to be created
-        text: |
-          A code vulnerability scan has completed.
