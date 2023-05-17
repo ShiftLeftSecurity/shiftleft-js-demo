@@ -60,3 +60,14 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
+    
+    - name: Send Slack notification
+      uses: slack/github-action@v2
+      with:
+        status: ${{ job.status }}
+        fields: severity,description,ref
+        footer: "GitHub Actions"
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        channel: your-slack-channel
+        text: |
+          A code vulnerability scan has completed.
