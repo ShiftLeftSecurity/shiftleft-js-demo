@@ -1,0 +1,12 @@
+# .github/workflows/dev.yml
+name: Makes CI
+on: [push, pull_request]
+jobs:
+  helloWorld:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@f095bcc56b7c2baf48f3ac70d6d6782f4f553222
+      - uses: docker://ghcr.io/fluidattacks/makes/amd64:24.02
+        name: helloWorld
+        with:
+          args: m . /helloWorld 1 2 3
