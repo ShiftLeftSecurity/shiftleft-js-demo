@@ -1,26 +1,26 @@
-const MongoDBClient = require('./src/DB/MongoDBClient');
-const timeoutRef = setTimeout(console.log, 20000);
+const MongoDBClient = require('./src/DB/MongoDBClient')
+const timeoutRef = setTimeout(console.log, 20000)
 
-function initDB() {
-  new MongoDBClient().connect(async function(err, client) {
+function initDB () {
+  new MongoDBClient().connect(async function (err, client) {
     if (err) {
-      console.error(err);
-      process.exit(1);
+      console.error(err)
+      process.exit(1)
     }
-    const db = client.db('tarpit', { returnNonCachedInstance: true });
+    const db = client.db('tarpit', { returnNonCachedInstance: true })
 
-    await createUsers(db);
-    clearTimeout(timeoutRef);
-    console.log('Database initialized');
+    await createUsers(db)
+    clearTimeout(timeoutRef)
+    console.log('Database initialized')
 
-    console.log(await db.stats());
+    console.log(await db.stats())
 
-    await client.close();
-  });
+    await client.close()
+  })
 }
-setTimeout(initDB, 10000);
+setTimeout(initDB, 10000)
 
-async function createUsers(db) {
+async function createUsers (db) {
   /* JSON Generated from https://next.json-generator.com
     [
       {
@@ -47,9 +47,9 @@ async function createUsers(db) {
   */
 
   try {
-    const collection = await db.collection('users').drop();
+    const collection = await db.collection('users').drop()
   } catch (ex) {
-    console.error(ex);
+    console.error(ex)
   }
   return await db.collection('users').insertMany([
     {
@@ -185,12 +185,12 @@ async function createUsers(db) {
       lastName: 'Stein',
       company: 'KAGE',
       email: 'monica.stein@kage.name',
-      phone: '+1 (911) 560-2495',
+      phone: '+1 (911) 560-2497',
       address: '989 Radde Place, Alleghenyville, Maine',
       zipCode: 5691,
       creditCard: '2ef14544-ab4c-4814-8968-9242f1e26a83',
       username: 'Stein_Monica',
       password: 'ipsum'
     }
-  ]);
+  ])
 }

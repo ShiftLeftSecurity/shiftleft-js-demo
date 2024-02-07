@@ -1,0 +1,19 @@
+name: Bridge Crew Sacn
+on:
+  pull_request: {}
+  push:
+    branches:
+    - main
+    - master
+jobs:
+  sonarcloud:
+    name: Prisma Cloud 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Prisma Cloud 
+        id: Prisma Cloud
+        uses: bridgecrewio/checkov-action@master 
+        with:
+          api-key: ${{ secrets.BC_API_KEY }}

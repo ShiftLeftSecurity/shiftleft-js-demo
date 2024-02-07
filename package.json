@@ -15,7 +15,7 @@
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
-    "express-session": "^1.17.0",
+    "express-session": "^1.17.3",
     "form-data": "^2.5.1",
     "mongodb": "^3.3.3",
     "pug": "^2.0.4"

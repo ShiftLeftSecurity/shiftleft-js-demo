@@ -1,0 +1,13 @@
+name: Dependency Analysis Report
+on:
+  schedule:
+    - cron: '0 10 * * 1' # Cron 
+  workflow_dispatch:
+jobs:
+  Notify-Vulnerabilites:
+    runs-on: ubuntu-latest
+    steps:
+    - name: CodeQL and Dependabot Report Action
+      uses: rsdmike/github-security-report-action@v3.0.4
+      with:
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}

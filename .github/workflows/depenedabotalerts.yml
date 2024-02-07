@@ -1,0 +1,15 @@
+name: Dependency Analysis
+on:
+  schedule:
+    - cron: '0 10 * * 1' # Cron 
+  workflow_dispatch:
+jobs:
+  Notify-Vulnerabilites:
+    runs-on: ubuntu-latest
+    steps:
+      # Latest version available at: https://github.com/kunalnagarco/action-cve/releases
+      - name: Notify Vulnerabilities
+        uses: kunalnagarco/action-cve@v1.7.36
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # This secret need to be created
+          slack_webhook: ${{ secrets.SLACK_WEBHOOK }} # This secret need to be created
