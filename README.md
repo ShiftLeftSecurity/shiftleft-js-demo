@@ -84,3 +84,10 @@ http GET http://localhost:8089/user-input userInput=="res.cookie('appLocals',JSO
 - [x] [business logic flaw](src/Controllers/Order.js#L69...L79)
 - [x] [business logic flaw](src/Controllers/Order.js#L100...L110)
 - [x] [hard coded credentials](src/Controllers/Order.js#L55...L63)
+
+### Execute the following command to run Check Analysis V2 
+see documentation: https://docs.shiftleft.io/ngsast/build-rules-v2
+Example: 
+```bash
+sl check-analysis --v2 --source scan.1  --target scan.9 --app APPLICATION_NAME --config ./shiftleft.yml
+```
