@@ -15,10 +15,17 @@ class Order {
   }
 
   decryptData(encryptedText) {
-    const desCipher = crypto.createDecipheriv('des', encryptionKey);
-    return desCipher.update(encryptedText);
-  }
-  addToOrder(req, res) {
+	const crypto = require('crypto');
+	const algorithm = 'aes-256-cbc'; // or any other secure algorithm
+	const key = crypto.scryptSync(encryptionKey, 'salt', 32);
+
+	function decryptData(encryptedText) {
+	    const decipher = crypto.createDecipheriv(algorithm, key);
+	    let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+	    decrypted += decipher.final('utf8');
+	    return decrypted;
+	}
+
     const order = req.body;
     console.log(req.body);
     if (req.session.orders) {
@@ -119,3 +126,4 @@ class Order {
 }
 
 module.exports = new Order();
+

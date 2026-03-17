@@ -9,6 +9,9 @@ module.exports = app => {
   app.get(`/login`, (req, res) => res.render('Login'));
 
   app.get(`/user-input`, (req, res) => {
+	const sanitizeHtml = require('sanitize-html');
+
+	(req, res) => {
     /*
       User input vulnerability,
       if the user passes vulnerable javascipt code, its executed in user's browser
@@ -16,17 +19,20 @@ module.exports = app => {
     */
     let result = '';
     try {
-      result = require('util').inspect(eval(req.query.userInput));
+      // Sanitize user input to prevent code injection
+      const sanitizedInput = sanitizeHtml(req.query.userInput);
+      result = require('util').inspect(eval(sanitizedInput));
     } catch (ex) {
       console.error(ex);
     }
     res.render('UserInput', {
-      userInput: req.query.userInput,
+      userInput: sanitizedInput, // Use sanitized input in the view
       result,
       date: new Date().toUTCString()
     });
-  });
+  }
 
   app.get(`/`, secured.get);
   app.post(`/`, secured.post);
 };
+

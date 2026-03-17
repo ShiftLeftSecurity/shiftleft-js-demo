@@ -11,15 +11,20 @@ class Login {
   }
 
   encryptData(secretText) {
-    const crypto = require('crypto');
+	const crypto = require('crypto');
 
-    // Weak encryption
-    const desCipher = crypto.createCipheriv(
-      'des',
-      "This is a simple password, don't guess it"
-    );
-    return desCipher.write(secretText, 'utf8', 'hex'); // BAD: weak encryption
-  }
+	function encryptData(secretText) {
+	  // Strong encryption using AES-256-CBC
+	  const key = crypto.randomBytes(32);
+	  const iv = crypto.randomBytes(16);
+
+	  const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+
+	  let encrypted = cipher.update(secretText, 'utf8', 'hex');
+	  encrypted += cipher.final('hex');
+
+	  return { iv: iv.toString('hex'), encryptedData: encrypted };
+	}
 
   async handleLogin(req, res, client, data) {
     const { username, password, keeponline } = data;
@@ -97,3 +102,4 @@ class Login {
 }
 
 module.exports = Login;
+
