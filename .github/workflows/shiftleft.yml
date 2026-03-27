@@ -1,0 +1,33 @@
+# This workflow integrates ShiftLeft NG SAST with GitHub
+# Visit https://docs.shiftleft.io for help
+name: ShiftLeft
+
+on:
+  pull_request:
+
+jobs:
+  NextGen-Static-Analysis:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download ShiftLeft CLI
+      run: |
+        curl https://cdn.shiftleft.io/download/sl > ${GITHUB_WORKSPACE}/sl && chmod a+rx ${GITHUB_WORKSPACE}/sl
+    # ShiftLeft requires Java 1.8. Post the package step override the version
+    - name: Setup Java JDK
+      uses: actions/setup-java@v1.3.0
+      with:
+        java-version: 1.8
+    - name: NextGen Static Analysis
+      run: ${GITHUB_WORKSPACE}/sl analyze --app shiftleft-js-demo --tag branch=${{ github.head_ref }} --js --cpg .
+      env:
+        SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
+        SHIFTLEFT_API_HOST: www-ext.stg.shiftleft.io
+        SHIFTLEFT_GRPC_API_HOST: api-ext.stg.shiftleft.io:443
+    - name: Create status check
+      run: |
+        URL="https://www.stg.shiftleft.io/violationlist/shiftleft-js-demo?apps=shiftleft-js-demo&isApp=1"
+        GH_CHECK_URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/check-runs"
+        curl -XPOST $GH_CHECK_URL -H "Authorization: Token ${GITHUB_TOKEN}" -H "accept: application/vnd.github.antiope-preview+json" -H "Content-Type: application/json" -d "{\"name\": \"ShiftLeft Inspect\", \"head_sha\": \"${GITHUB_REF}\", \"external_id\": \"shiftleft-js-demo\", \"details_url\": \"${URL}\", \"status\": \"completed\", \"conclusion\": \"action_required\", \"output\": {\"title\": \"ShiftLeft Inspect Findings\", \"summary\": \"Visit ${URL} for the findings\"}}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
