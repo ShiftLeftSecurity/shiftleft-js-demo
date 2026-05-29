@@ -10,14 +10,36 @@ class Login {
     res.redirect('/login');
   }
 
-  encryptData(secretText) {
+encryptData(secretText) {
     const crypto = require('crypto');
 
-    // Weak encryption
-    const desCipher = crypto.createCipheriv(
-      'des',
-      "This is a simple password, don't guess it"
-    );
+    // Generate a random 256-bit key (32 bytes) for AES-256
+    // In production, this should be securely generated once and stored in environment variables
+    const key = crypto.randomBytes(32);
+    
+    // Generate a random 16-byte initialization vector
+    const iv = crypto.randomBytes(16);
+    
+    // Use AES-256-GCM for strong encryption with authentication
+    const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
+    
+    // Encrypt the data
+    let encrypted = cipher.update(secretText, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    
+    // Get the authentication tag for integrity verification
+    const authTag = cipher.getAuthTag();
+    
+    // Return encrypted data along with IV and auth tag (all needed for decryption)
+    // In production, store key securely (e.g., environment variables, key management service)
+    return {
+        encrypted: encrypted,
+        iv: iv.toString('hex'),
+        authTag: authTag.toString('hex'),
+        key: key.toString('hex') // Store this securely, not in the return object in production
+    };
+}
+
     return desCipher.write(secretText, 'utf8', 'hex'); // BAD: weak encryption
   }
 
