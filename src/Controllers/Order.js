@@ -14,10 +14,44 @@ class Order {
     return desCipher.update(secretText, 'utf8', 'hex');
   }
 
-  decryptData(encryptedText) {
-    const desCipher = crypto.createDecipheriv('des', encryptionKey);
-    return desCipher.update(encryptedText);
+decryptData(encryptedText) {
+  // Use AES-256-GCM instead of DES for strong encryption
+  // AES-256-GCM is recommended by NIST and OWASP for symmetric encryption
+  
+  // Ensure encryptionKey is 32 bytes for AES-256
+  // The key should be stored securely (e.g., environment variables, key management service)
+  const algorithm = 'aes-256-gcm';
+  
+  // Parse the encrypted data which should contain IV, auth tag, and encrypted content
+  // Expected format: iv:authTag:encryptedData (all in hex)
+  const parts = encryptedText.split(':');
+  
+  if (parts.length !== 3) {
+    throw new Error('Invalid encrypted data format');
   }
+  
+  const iv = Buffer.from(parts[0], 'hex');
+  const authTag = Buffer.from(parts[1], 'hex');
+  const encryptedData = Buffer.from(parts[2], 'hex');
+  
+  // Verify IV length (should be 12 bytes for GCM mode)
+  if (iv.length !== 12) {
+    throw new Error('Invalid IV length');
+  }
+  
+  // Create decipher with AES-256-GCM
+  const decipher = crypto.createDecipheriv(algorithm, encryptionKey, iv);
+  
+  // Set the authentication tag for integrity verification
+  decipher.setAuthTag(authTag);
+  
+  // Decrypt the data
+  let decrypted = decipher.update(encryptedData);
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  
+  return decrypted.toString('utf8');
+}
+
   addToOrder(req, res) {
     const order = req.body;
     console.log(req.body);
