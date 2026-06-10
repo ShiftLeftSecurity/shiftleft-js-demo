@@ -8,16 +8,68 @@ class Order {
     // Hash Key
     return key;
   }
-  encryptData(secretText) {
-    // Weak encryption
-    const desCipher = crypto.createCipheriv('des', encryptionKey);
-    return desCipher.update(secretText, 'utf8', 'hex');
-  }
+encryptData(secretText) {
+  // Use AES-256-GCM for strong encryption (FIPS 140-2 compliant)
+  // Generate a random 32-byte key (256 bits) for AES-256
+  // Note: encryptionKey should be a 32-byte buffer, typically derived from a secure key management system
+  
+  // Generate a random initialization vector (IV) for each encryption operation
+  const iv = crypto.randomBytes(16); // 16 bytes (128 bits) for AES
+  
+  // Create cipher using AES-256-GCM (Galois/Counter Mode for authenticated encryption)
+  const cipher = crypto.createCipheriv('aes-256-gcm', encryptionKey, iv);
+  
+  // Encrypt the data
+  let encrypted = cipher.update(secretText, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  
+  // Get the authentication tag for integrity verification
+  const authTag = cipher.getAuthTag();
+  
+  // Return encrypted data with IV and auth tag (needed for decryption)
+  // Format: iv:authTag:encryptedData
+  return iv.toString('hex') + ':' + authTag.toString('hex') + ':' + encrypted;
+}
 
-  decryptData(encryptedText) {
-    const desCipher = crypto.createDecipheriv('des', encryptionKey);
-    return desCipher.update(encryptedText);
+
+decryptData(encryptedText) {
+  // Use AES-256-GCM instead of DES for strong encryption
+  // AES-256-GCM is recommended by NIST and OWASP for symmetric encryption
+  
+  // Ensure encryptionKey is 32 bytes for AES-256
+  // The key should be stored securely (e.g., environment variables, key management service)
+  const algorithm = 'aes-256-gcm';
+  
+  // Parse the encrypted data which should contain IV, auth tag, and encrypted content
+  // Expected format: iv:authTag:encryptedData (all in hex)
+  const parts = encryptedText.split(':');
+  
+  if (parts.length !== 3) {
+    throw new Error('Invalid encrypted data format');
   }
+  
+  const iv = Buffer.from(parts[0], 'hex');
+  const authTag = Buffer.from(parts[1], 'hex');
+  const encryptedData = Buffer.from(parts[2], 'hex');
+  
+  // Verify IV length (should be 12 bytes for GCM mode)
+  if (iv.length !== 12) {
+    throw new Error('Invalid IV length');
+  }
+  
+  // Create decipher with AES-256-GCM
+  const decipher = crypto.createDecipheriv(algorithm, encryptionKey, iv);
+  
+  // Set the authentication tag for integrity verification
+  decipher.setAuthTag(authTag);
+  
+  // Decrypt the data
+  let decrypted = decipher.update(encryptedData);
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  
+  return decrypted.toString('utf8');
+}
+
   addToOrder(req, res) {
     const order = req.body;
     console.log(req.body);
