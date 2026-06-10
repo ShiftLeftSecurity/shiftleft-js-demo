@@ -8,11 +8,29 @@ class Order {
     // Hash Key
     return key;
   }
-  encryptData(secretText) {
-    // Weak encryption
-    const desCipher = crypto.createCipheriv('des', encryptionKey);
-    return desCipher.update(secretText, 'utf8', 'hex');
-  }
+encryptData(secretText) {
+  // Use AES-256-GCM for strong encryption (FIPS 140-2 compliant)
+  // Generate a random 32-byte key (256 bits) for AES-256
+  // Note: encryptionKey should be a 32-byte buffer, typically derived from a secure key management system
+  
+  // Generate a random initialization vector (IV) for each encryption operation
+  const iv = crypto.randomBytes(16); // 16 bytes (128 bits) for AES
+  
+  // Create cipher using AES-256-GCM (Galois/Counter Mode for authenticated encryption)
+  const cipher = crypto.createCipheriv('aes-256-gcm', encryptionKey, iv);
+  
+  // Encrypt the data
+  let encrypted = cipher.update(secretText, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  
+  // Get the authentication tag for integrity verification
+  const authTag = cipher.getAuthTag();
+  
+  // Return encrypted data with IV and auth tag (needed for decryption)
+  // Format: iv:authTag:encryptedData
+  return iv.toString('hex') + ':' + authTag.toString('hex') + ':' + encrypted;
+}
+
 
 decryptData(encryptedText) {
   // Use AES-256-GCM instead of DES for strong encryption
